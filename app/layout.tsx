@@ -1,19 +1,24 @@
-import React from "react"
-import type { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import type { Metadata } from "next"
+import "./globals.css"
+import { codanBold, nord, nectoMono } from "./fonts/fonts"
 
 export const metadata: Metadata = {
-  title: 'Adentro Studio | Arquitectura Consciente y Sensorial',
-  description: 'Diseñamos experiencias que sanan. Arquitectura consciente, interiorismo sensorial y espacios que transforman.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/logo.svg',      // aquí ponemos tu SVG principal
-        type: 'image/svg+xml', // tipo SVG
-      },
-    ],
-    apple: '/logo.svg',       // también para Apple Touch
-  },
+  title: "Tu Empresa | Arquitectura & Diseño",
+  description: "Estudio de arquitectura y diseño",
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="es">
+      <body 
+        className={`${nord.variable} ${codanBold.variable} ${nectoMono.variable} font-sans antialiased`}
+      >
+        {children}
+      </body>
+    </html>
+  )
 }

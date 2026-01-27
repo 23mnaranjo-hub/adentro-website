@@ -22,7 +22,6 @@ export function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Video Background with Slow Zoom */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="animate-slow-zoom w-full h-full">
           <iframe
@@ -36,13 +35,10 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Dark Overlay with blur for atmosphere */}
       <div className="absolute inset-0 z-10 bg-black/30 backdrop-blur-[1px]" />
 
-      {/* Content */}
       <div className="relative z-20 flex h-full flex-col items-center justify-center px-6">
-        {/* Dynamic Mantras */}
-        <div className="h-24 flex items-center justify-center">
+        <div className="h-40 md:h-48 flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.h1
               key={currentMantra}
@@ -50,14 +46,13 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="font-heading text-3xl md:text-5xl lg:text-6xl text-ivory-cream text-center tracking-tight text-balance"
+              className="font-sans font-thin text-4xl md:text-6xl lg:text-7xl text-ivory-cream text-center tracking-wide text-balance leading-tight max-w-5xl"
             >
               {mantras[currentMantra]}
             </motion.h1>
           </AnimatePresence>
         </div>
 
-        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -72,7 +67,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Social Icons - Bottom Right */}
       <div className="absolute bottom-8 right-8 z-20 flex flex-col gap-4">
         <a
           href="https://instagram.com"

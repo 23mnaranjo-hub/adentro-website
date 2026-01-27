@@ -3,94 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Custom Font Declarations */
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-Thin.otf') format('opentype');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-ExtraLight.otf') format('opentype');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-Light.otf') format('opentype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-SemiBold.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-ExtraBold.otf') format('opentype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Codan';
-  src: url('/fonts/Codan-Black.otf') format('opentype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Nord';
-  src: url('/fonts/Nord.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Necto Mono';
-  src: url('/fonts/NectoMono.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* ===== FONTS ARE NOW LOADED VIA fonts.ts - NO @font-face NEEDED ===== */
 
 :root {
   /* Adentro Studio Brand Colors */
@@ -100,7 +13,7 @@
   --soft-clay: #C5BCAA;
   --warm-sand: #E1DBC9;
   --ivory-cream: #F9F3E8;
-  
+
   /* Semantic tokens mapped to brand (PRESERVED from existing code) */
   --background: #F9F3E8;
   --foreground: #2B391C;
@@ -138,7 +51,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
- 
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -175,16 +88,16 @@
 }
 
 @theme inline {
-  /* Custom Local Fonts */
-  --font-heading: 'Codan', sans-serif;
-  --font-nav: 'Nord', sans-serif;
-  --font-body: 'Necto Mono', monospace;
-  
+  /* Custom Local Fonts - Now using CSS variables from layout.tsx */
+  --font-heading: var(--font-codan-bold);
+  --font-nav: var(--font-nord);
+  --font-body: var(--font-necto-mono);
+
   /* Map to standard Tailwind font utilities */
-  --font-sans: 'Nord', sans-serif;
-  --font-serif: 'Codan', sans-serif;
-  --font-mono: 'Necto Mono', monospace;
-  
+  --font-sans: var(--font-nord);
+  --font-serif: var(--font-codan-bold);
+  --font-mono: var(--font-necto-mono);
+
   /* Brand colors (PRESERVED from existing code) */
   --color-sostenible: var(--sostenible);
   --color-pistachio: var(--pistachio);
@@ -192,7 +105,7 @@
   --color-soft-clay: var(--soft-clay);
   --color-warm-sand: var(--warm-sand);
   --color-ivory-cream: var(--ivory-cream);
-  
+
   /* Semantic colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);

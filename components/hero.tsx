@@ -4,10 +4,57 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Instagram, Linkedin } from "lucide-react"
 
+// MANTRA CONFIG:
+// Ahora 'text' es un JSX element para poder mezclar estilos (cursivas).
 const mantras = [
-  "Diseñamos experiencias que sanan",
-  "Concebimos el espacio desde la emoción",
-  "Arquitectura consciente y sensorial",
+  {
+    content: (
+      <>
+        Diseñar es <em className="italic text-white/90">cuidar</em> la relación entre el espacio, el cuerpo y la <em className="italic text-white/90">experiencia</em>.
+      </>
+    ),
+    className: "items-center justify-center text-center max-w-4xl" 
+  },
+  {
+    content: (
+      <>
+        El arte <em className="italic text-white/90">ordena</em> el caos.
+      </>
+    ),
+    className: "items-start justify-center text-left pl-6 md:pl-32 pt-20 max-w-2xl" 
+  },
+  {
+    content: (
+      <>
+        Mirar hacia <em className="italic text-white/90">adentro</em> para proyectar hacia <em className="italic text-white/90">afuera</em>.
+      </>
+    ),
+    className: "items-end justify-center text-right pr-6 md:pr-32 pb-20 max-w-3xl ml-auto" 
+  },
+  {
+    content: (
+      <>
+        La pausa no es vacío, es el <em className="italic text-white/90">origen</em> de la intención.
+      </>
+    ),
+    className: "items-center justify-center text-center max-w-3xl" 
+  },
+  {
+    content: (
+      <>
+        Buscamos la <em className="italic text-white/90">permanencia</em>, no la tendencia.
+      </>
+    ),
+    className: "items-start justify-end text-right pr-6 md:pr-24 pt-32 max-w-3xl ml-auto"
+  },
+  {
+    content: (
+      <>
+        Cualquier creación nacida del <em className="italic text-white/90">agotamiento</em> es un disfraz.
+      </>
+    ),
+    className: "items-start justify-end text-right pr-6 md:pr-24 pt-32 max-w-3xl ml-auto" 
+  },
 ]
 
 export function Hero() {
@@ -16,16 +63,18 @@ export function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentMantra((prev) => (prev + 1) % mantras.length)
-    }, 4000)
+    }, 8000) // <--- CAMBIO AQUÍ: Antes era 5000, ahora 8000 (8 segundos)
     return () => clearInterval(interval)
   }, [])
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
+      
+      {/* --- VIDEO BACKGROUND --- */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="animate-slow-zoom w-full h-full">
           <iframe
-            src="https://www.youtube.com/embed/hxOXxPAYmiY?start=100&autoplay=1&mute=1&controls=0&loop=1&playlist=hxOXxPAYmiY&showinfo=0&rel=0&modestbranding=1"
+            src="https://www.youtube.com/embed/b21b1HI16f8?start=19&autoplay=1&mute=1&controls=0&loop=1&playlist=b21b1HI16f8&showinfo=0&rel=0&modestbranding=1"
             className="absolute h-[120%] w-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             style={{ border: "none" }}
             allow="autoplay; encrypted-media"
@@ -35,44 +84,43 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute inset-0 z-10 bg-black/30 backdrop-blur-[1px]" />
+      {/* --- OVERLAY --- */}
+      <div className="absolute inset-0 z-10 bg-black/30" />
 
-      <div className="relative z-20 flex h-full flex-col items-center justify-center px-6">
-        <div className="h-40 md:h-48 flex items-center justify-center">
+      {/* --- CONTENT CONTAINER --- */}
+      <div className="relative z-20 w-full h-full p-6 md:p-12 flex flex-col">
+        
+        <div className="flex-grow relative flex">
           <AnimatePresence mode="wait">
-            <motion.h1
+            <motion.div
               key={currentMantra}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="font-sans font-thin text-4xl md:text-6xl lg:text-7xl text-ivory-cream text-center tracking-wide text-balance leading-tight max-w-5xl"
+              initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              className={`absolute inset-0 flex flex-col ${mantras[currentMantra].className}`}
             >
-              {mantras[currentMantra]}
-            </motion.h1>
+              {/* CAMBIO AQUÍ: 
+                  1. font-body (Usa DM Sans, tu letra de texto).
+                  2. font-light (Para que sea más fina y elegante).
+                  3. text-ivory-cream (Color crema suave).
+              */}
+              <h1 className="font-body font-light text-2xl md:text-4xl lg:text-4xl text-ivory-cream leading-relaxed tracking-wide text-balance">
+                {mantras[currentMantra].content}
+              </h1>
+            </motion.div>
           </AnimatePresence>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-32 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-px h-16 bg-gradient-to-b from-ivory-cream/0 via-ivory-cream/60 to-ivory-cream/0"
-          />
-        </motion.div>
       </div>
 
-      <div className="absolute bottom-8 right-8 z-20 flex flex-col gap-4">
+      {/* --- SOCIAL ICONS --- */}
+      <div className="absolute bottom-8 right-8 z-30 flex flex-col gap-4">
         <a
-          href="https://instagram.com"
+          href="https://www.instagram.com/a_dentrostudio/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-ivory-cream/70 hover:text-ivory-cream transition-colors duration-300"
+          className="text-ivory-cream/60 hover:text-ivory-cream transition-colors duration-300 transform hover:scale-110"
           aria-label="Instagram"
         >
           <Instagram className="w-5 h-5" strokeWidth={1.5} />
@@ -81,7 +129,7 @@ export function Hero() {
           href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-ivory-cream/70 hover:text-ivory-cream transition-colors duration-300"
+          className="text-ivory-cream/60 hover:text-ivory-cream transition-colors duration-300 transform hover:scale-110"
           aria-label="LinkedIn"
         >
           <Linkedin className="w-5 h-5" strokeWidth={1.5} />

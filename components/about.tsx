@@ -4,9 +4,23 @@ import { motion } from "framer-motion"
 
 export function About() {
   return (
-    <section id="nosotros" className="py-24 md:py-32 bg-sostenible">
-      <div className="max-w-7xl mx-auto px-6">
+    <section 
+      id="nosotros" 
+      // 1. Usamos el color SÓLIDO de base. La máscara se encargará del degradado.
+      className="py-24 md:py-32 bg-[#2B391C] crumpled-paper relative"
+      style={{
+        // 2. MÁSCARA DE RECORTE (El secreto):
+        // - transparent 0%: El tope de la sección es invisible (deja ver el beige de atrás).
+        // - black 15%: Al 15% de altura, la sección ya es totalmente visible (Sólida).
+        // - black 100%: Se mantiene sólida hasta el final.
+        maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)"
+      }}
+    >
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+          
           {/* Image Placeholder */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -15,7 +29,7 @@ export function About() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="aspect-[4/5] bg-warm-sand/20 rounded-2xl overflow-hidden">
+            <div className="aspect-[4/5] bg-warm-sand/20 rounded-2xl overflow-hidden backdrop-blur-sm border border-ivory-cream/10">
               {/* Portrait Placeholder */}
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center text-ivory-cream/40">
@@ -29,7 +43,7 @@ export function About() {
               </div>
             </div>
             {/* Decorative element */}
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pistachio/30 rounded-full blur-2xl" />
+            <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pistachio/30 rounded-full blur-2xl opacity-60" />
           </motion.div>
 
           {/* Text Content */}
@@ -43,7 +57,7 @@ export function About() {
               Somos Adentro
             </h2>
             
-            <div className="space-y-6 text-ivory-cream/80 font-body leading-relaxed">
+            <div className="space-y-6 text-ivory-cream/90 font-body leading-relaxed text-lg font-light">
               <p>
                 Nacimos de la convicción de que los espacios tienen el poder de transformar. 
                 Somos dos almas creativas que encontraron en la arquitectura y el diseño interior 

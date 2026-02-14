@@ -56,16 +56,16 @@ export function Footer() {
             </h4>
             <div className="space-y-4">
               <a
-                href="mailto:hola@adentrostudio.com"
+                href="mailto:admin@adentrostudio.com"
                 className="flex items-center gap-3 font-body text-ivory-cream/70 hover:text-ivory-cream transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                hola@adentrostudio.com
+                admin@adentrostudio.com
               </a>
               
               <div className="flex items-center gap-4 pt-4">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/a_dentrostudio/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-ivory-cream/50 hover:text-ivory-cream transition-colors"

@@ -31,21 +31,22 @@ const elegantEase = [0.22, 1, 0.36, 1]
 
 export function Ritmo() {
   return (
-    <section id="ritmo" className="py-24 md:py-32 relative overflow-hidden">
-      {/* Abstract Gradient Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-pistachio/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-soft-clay/30 rounded-full blur-[100px] translate-x-1/3 translate-y-1/3" />
-        <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-warm-sand/20 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute inset-0 bg-ivory-cream/60 backdrop-blur-3xl" />
-      </div>
+    // Agregamos bg-transparent explícitamente para asegurar que se vea el fondo del body
+    <section id="ritmo" className="py-24 md:py-32 relative overflow-hidden bg-transparent">
+      
+      {/* BORRÉ EL BLOQUE "Abstract Gradient Background" AQUÍ.
+         Al quitarlo, esta sección se vuelve transparente y deja ver 
+         el degradado suave que viene desde Servicios hasta Nosotros.
+      */}
 
-      {/* Noise Texture */}
+      {/* Noise Texture (Esta sí la dejamos para mantener la consistencia del grano) */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
       }} />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
+        {/* ... El resto de tu código sigue igual ... */}
+        
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -1,112 +1,31 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css"; /* Si te da error esta línea, bórrala. Si v0 la instaló, déjala. */
 
 @custom-variant dark (&:is(.dark *));
 
-/* ===== FONTS ARE NOW LOADED VIA fonts.ts - NO @font-face NEEDED ===== */
-
-:root {
-  /* Adentro Studio Brand Colors */
-  --sostenible: #2B391C;
-  --pistachio: #D6CCA8;
-  --oatmilk: #F0EAD8;
-  --soft-clay: #C5BCAA;
-  --warm-sand: #E1DBC9;
-  --ivory-cream: #F9F3E8;
-
-  /* Semantic tokens mapped to brand (PRESERVED from existing code) */
-  --background: #F9F3E8;
-  --foreground: #2B391C;
-  --card: #FFFFFF;
-  --card-foreground: #2B391C;
-  --popover: #FFFFFF;
-  --popover-foreground: #2B391C;
-  --primary: #2B391C;
-  --primary-foreground: #F9F3E8;
-  --secondary: #D6CCA8;
-  --secondary-foreground: #2B391C;
-  --muted: #E1DBC9;
-  --muted-foreground: #5A6B4A;
-  --accent: #C5BCAA;
-  --accent-foreground: #2B391C;
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #C5BCAA;
-  --input: #E1DBC9;
-  --ring: #2B391C;
-  --radius: 0.625rem;
-
-  /* New tokens from default shadcn/ui styles */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0); /* Default value, user defined --background will take precedence for overall page background */
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
-}
-
+/* =====================================================
+   CONFIGURACIÓN DEL TEMA (Tailwind v4)
+   ===================================================== */
 @theme inline {
-  /* Custom Local Fonts - Now using CSS variables from layout.tsx */
-  --font-heading: var(--font-codan-bold);
-  --font-nav: var(--font-nord);
-  --font-body: var(--font-necto-mono);
+  /* ✅ FUENTES — leyendo las variables que SÍ inyecta layout.tsx */
+  --font-sans:    var(--font-dmsans);   /* clase: font-sans (default body) */
+  --font-heading: var(--font-josefin);  /* clase: font-heading */
+  --font-display: var(--font-josefin);  /* clase: font-display */
+  --font-nav:     var(--font-sora);     /* clase: font-nav */
+  --font-body:    var(--font-dmsans);   /* clase: font-body */
+  --font-mono:    var(--font-dmsans);
 
-  /* Map to standard Tailwind font utilities */
-  --font-sans: var(--font-nord);
-  --font-serif: var(--font-codan-bold);
-  --font-mono: var(--font-necto-mono);
+  /* Colores — sin cambios */
+  --color-sostenible:   var(--sostenible);
+  --color-pistachio:    var(--pistachio);
+  --color-oatmilk:      var(--oatmilk);
+  --color-soft-clay:    var(--soft-clay);
+  --color-warm-sand:    var(--warm-sand);
+  --color-ivory-cream:  var(--ivory-cream);
+  --color-background:   var(--background);
+  --color-foreground:   var(--foreground);
 
-  /* Brand colors (PRESERVED from existing code) */
-  --color-sostenible: var(--sostenible);
-  --color-pistachio: var(--pistachio);
-  --color-oatmilk: var(--oatmilk);
-  --color-soft-clay: var(--soft-clay);
-  --color-warm-sand: var(--warm-sand);
-  --color-ivory-cream: var(--ivory-cream);
-
-  /* Semantic colors */
+  /* --- 3. Mapeo Semántico (Variables Shadcn) --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -126,12 +45,13 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* --- 4. Radios de Borde y Gráficos --- */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
-  /* New tokens from default shadcn/ui styles */
+  
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -147,16 +67,136 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* =====================================================
+   VARIABLES CSS (ROOT) - TUS COLORES ORIGINALES
+   ===================================================== */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  :root {
+    /* Adentro Studio Brand Colors (TUS VALORES EXACTOS) */
+    --sostenible: #2B391C;
+    --pistachio: #D6CCA8;
+    --oatmilk: #F0EAD8;
+    --soft-clay: #C5BCAA;
+    --warm-sand: #E1DBC9;
+    --ivory-cream: #F9F3E8;
+
+    /* Semantic tokens mapped to brand */
+    --background: #F9F3E8;
+    --foreground: #2B391C;
+    --card: #FFFFFF;
+    --card-foreground: #2B391C;
+    --popover: #FFFFFF;
+    --popover-foreground: #2B391C;
+    --primary: #2B391C;
+    --primary-foreground: #F9F3E8;
+    --secondary: #D6CCA8;
+    --secondary-foreground: #2B391C;
+    --muted: #E1DBC9;
+    --muted-foreground: #5A6B4A;
+    --accent: #C5BCAA;
+    --accent-foreground: #2B391C;
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.577 0.245 27.325);
+    --border: #C5BCAA;
+    --input: #E1DBC9;
+    --ring: #2B391C;
+    --radius: 0.625rem;
+
+    /* New tokens from default shadcn/ui styles */
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
   }
+
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.145 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.145 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.985 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.396 0.141 25.723);
+    --destructive-foreground: oklch(0.637 0.237 25.331);
+    --border: oklch(0.269 0 0);
+    --input: oklch(0.269 0 0);
+    --ring: oklch(0.439 0 0);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(0.269 0 0);
+    --sidebar-ring: oklch(0.439 0 0);
+  }
+}
+
+/* =====================================================
+   ESTILOS BASE Y EFECTOS
+   ===================================================== */
+@layer base {
   body {
-    @apply text-foreground;
-    background: radial-gradient(ellipse at 50% 0%, #F9F3E8 0%, #E1DBC9 100%);
-    background-attachment: fixed;
+    /* EL DEGRADADO MAESTRO (Controla el flujo de toda la web) */
+    /* 0% - 40%: Tonos Tierra/Claros (Para Servicios y Ritmo)
+       40% - 60%: Transición suave (De Beige a Verde)
+       60% - 100%: Verde Oscuro (Para Nosotros y Contacto)
+    */
+    background: linear-gradient(to bottom, 
+      #C5BCAA 0%,  /* Soft Clay (Inicio Servicios) */
+      #F0EAD8 30%, /* Oatmilk (Ritmo) */
+      #E1DBC9 45%, /* Warm Sand (Transición) */
+      #2B391C 70%, /* Sostenible (Inicio Nosotros) */
+      #1A2411 100% /* Verde más oscuro (Footer) */
+    );
+    background-attachment: scroll; /* Scroll normal para que el degradado baje contigo */
+    
+    color: var(--foreground);
+    font-family: var(--font-sans);
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
+}
+
+/* --- NUEVA TEXTURA: PAPEL ARRUGADO --- */
+.crumpled-paper {
+  position: relative;
+  overflow: hidden;
+}
+
+.crumpled-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.4; /* Ajusta esto: 0.2 es sutil, 0.5 es muy arrugado */
+  pointer-events: none;
+  /* Este SVG simula las arrugas usando luces y sombras */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='crumple'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='white' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23crumple)' opacity='1'/%3E%3C/svg%3E");
+  background-size: cover;
+  mix-blend-mode: overlay; /* Esto hace que la textura se fusione con el color verde */
 }
 
 /* Grain Texture Overlay */
@@ -171,12 +211,8 @@
 
 /* Slow zoom animation for hero backgrounds */
 @keyframes slow-zoom {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.1);
-  }
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
 }
 
 .animate-slow-zoom {

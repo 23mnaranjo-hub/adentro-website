@@ -13,7 +13,7 @@ const mantras = [
         Diseñar es <em className="italic text-white/90">cuidar</em> la relación entre el espacio, el cuerpo y la <em className="italic text-white/90">experiencia</em>.
       </>
     ),
-    className: "items-center justify-center text-center max-w-4xl" 
+    className: "items-center justify-center text-center max-w-4xl"
   },
   {
     content: (
@@ -21,7 +21,7 @@ const mantras = [
         El arte <em className="italic text-white/90">ordena</em> el caos.
       </>
     ),
-    className: "items-start justify-center text-left pl-6 md:pl-32 pt-20 max-w-2xl" 
+    className: "items-start justify-center text-left pl-6 md:pl-32 pt-20 max-w-2xl"
   },
   {
     content: (
@@ -29,7 +29,7 @@ const mantras = [
         Mirar hacia <em className="italic text-white/90">adentro</em> para proyectar hacia <em className="italic text-white/90">afuera</em>.
       </>
     ),
-    className: "items-end justify-center text-right pr-6 md:pr-32 pb-20 max-w-3xl ml-auto" 
+    className: "items-end justify-center text-right pr-6 md:pr-32 pb-20 max-w-3xl ml-auto"
   },
   {
     content: (
@@ -37,7 +37,7 @@ const mantras = [
         La pausa no es vacío, es el <em className="italic text-white/90">origen</em> de la intención.
       </>
     ),
-    className: "items-center justify-center text-center max-w-3xl" 
+    className: "items-center justify-center text-center max-w-3xl"
   },
   {
     content: (
@@ -53,7 +53,7 @@ const mantras = [
         Cualquier creación nacida del <em className="italic text-white/90">agotamiento</em> es un disfraz.
       </>
     ),
-    className: "items-start justify-end text-right pr-6 md:pr-24 pt-32 max-w-3xl ml-auto" 
+    className: "items-start justify-end text-right pr-6 md:pr-24 pt-32 max-w-3xl ml-auto"
   },
 ]
 
@@ -69,18 +69,27 @@ export function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      
+
       {/* --- VIDEO BACKGROUND --- */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-black/10">
         <div className="animate-slow-zoom w-full h-full">
-          <iframe
-            src="https://www.youtube.com/embed/b21b1HI16f8?start=19&autoplay=1&mute=1&controls=0&loop=1&playlist=b21b1HI16f8&showinfo=0&rel=0&modestbranding=1"
-            className="absolute h-[120%] w-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-            style={{ border: "none" }}
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            title="Background Video"
-          />
+          {/* 
+            ULTRA-LUJO PERFORMANCE: El iframe de YouTube causa pausas en el hilo principal (Total Blocking Time).
+            Reemplazado por un video nativo.
+            TODO: Asegúrate de subir tu video de fondo renderizado (h.264/WebM) en public/video/hero-bg.mp4 
+            Si necesitas usar Youtube temporalmente, descomenta el iframe y comenta este video.
+          */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster="/video/hero-poster.jpg"
+            className="absolute h-full w-full object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          >
+            <source src="/video/hero-bg.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
 
@@ -89,7 +98,7 @@ export function Hero() {
 
       {/* --- CONTENT CONTAINER --- */}
       <div className="relative z-20 w-full h-full p-6 md:p-12 flex flex-col">
-        
+
         <div className="flex-grow relative flex">
           <AnimatePresence mode="wait">
             <motion.div
@@ -104,8 +113,9 @@ export function Hero() {
                   1. font-body (Usa DM Sans, tu letra de texto).
                   2. font-light (Para que sea más fina y elegante).
                   3. text-ivory-cream (Color crema suave).
+                  4. text-fluid-hero (Tipografía fluida para móvil).
               */}
-              <h1 className="font-body font-light text-2xl md:text-4xl lg:text-4xl text-ivory-cream leading-relaxed tracking-wide text-balance">
+              <h1 className="font-body font-light text-fluid-hero text-ivory-cream leading-relaxed tracking-wide text-balance">
                 {mantras[currentMantra].content}
               </h1>
             </motion.div>

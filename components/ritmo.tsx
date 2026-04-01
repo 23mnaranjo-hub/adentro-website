@@ -2,6 +2,12 @@
 
 import { motion } from "framer-motion"
 
+// Helper para números romanos
+const toRoman = (num: number) => {
+  const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
+  return romanNumerals[num - 1] || String(num)
+}
+
 // The Flow: Conexión -> Análisis -> Diseño -> Materialización
 const flowSteps = [
   {
@@ -26,14 +32,14 @@ const flowSteps = [
   },
 ]
 
-// Elegant easing
-const elegantEase = [0.22, 1, 0.36, 1]
+// Elegant easing, explicitly casting to a 4-tuple for Framer Motion Types
+const elegantEase: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
 export function Ritmo() {
   return (
     // Agregamos bg-transparent explícitamente para asegurar que se vea el fondo del body
     <section id="ritmo" className="py-24 md:py-32 relative overflow-hidden bg-transparent">
-      
+
       {/* BORRÉ EL BLOQUE "Abstract Gradient Background" AQUÍ.
          Al quitarlo, esta sección se vuelve transparente y deja ver 
          el degradado suave que viene desde Servicios hasta Nosotros.
@@ -46,7 +52,7 @@ export function Ritmo() {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* ... El resto de tu código sigue igual ... */}
-        
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -73,8 +79,8 @@ export function Ritmo() {
         >
           <div className="max-w-3xl mx-auto text-center">
             <p className="font-body text-sm md:text-base text-sostenible/60 leading-relaxed tracking-wide mb-8">
-              Nuestro proceso nace de una conexión ecológica profunda: los ciclos circadianos, 
-              el movimiento de la luz, el fluir del aire. Cada espacio que diseñamos respira 
+              Nuestro proceso nace de una conexión ecológica profunda: los ciclos circadianos,
+              el movimiento de la luz, el fluir del aire. Cada espacio que diseñamos respira
               con el entorno y acompaña el ritmo natural de quienes lo habitan.
             </p>
             <div className="flex items-center justify-center gap-8 text-sostenible/40">
@@ -95,9 +101,9 @@ export function Ritmo() {
           transition={{ duration: 1, ease: elegantEase }}
           className="relative"
         >
-          {/* Horizontal Line - The Score */}
-          <div className="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-sostenible/10 -translate-y-1/2" />
-          
+          {/* Horizontal Line - The Score (ELIMINADA A PETICIÓN DEL USUARIO) */}
+          {/* <div className="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-sostenible/10 -translate-y-1/2" /> */}
+
           {/* Flow Steps */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
             {flowSteps.map((step, index) => (
@@ -109,42 +115,25 @@ export function Ritmo() {
                 transition={{ duration: 0.6, delay: index * 0.15, ease: elegantEase }}
                 className="relative text-center group"
               >
-                {/* Connector dot on the line */}
-                <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.3 + index * 0.15 }}
-                    className="w-3 h-3 rounded-full bg-sostenible/20 group-hover:bg-sostenible/40 transition-colors duration-300"
-                  />
-                </div>
-                
-                {/* Step Number */}
-                <div className="mb-4 md:mb-6 md:pt-8">
-                  <span className="font-body text-xs text-sostenible/30 tracking-widest">
-                    {String(index + 1).padStart(2, "0")}
+                {/* Connector dots removed as per request */}
+
+                {/* Step Number (Roman Numerals + Emerald Color) */}
+                <div className="mb-4 md:mb-6 md:pt-8 flex justify-center">
+                  <span className="font-heading text-lg font-semibold text-[#1A2611] drop-shadow-[0_0_8px_rgba(43,57,28,0.3)] tracking-widest group-hover:scale-110 group-hover:text-sostenible group-hover:drop-shadow-[0_0_12px_rgba(43,57,28,0.7)] transition-all duration-300">
+                    {toRoman(index + 1)}
                   </span>
                 </div>
-                
+
                 {/* Step Label */}
                 <h3 className="font-heading text-2xl md:text-3xl text-sostenible mb-3 tracking-tight">
                   {step.label}
                 </h3>
-                
+
                 {/* Step Description */}
                 <p className="font-body text-sm text-sostenible/60 leading-relaxed tracking-wide max-w-[200px] mx-auto">
                   {step.description}
                 </p>
 
-                {/* Arrow to next (except last) */}
-                {index < flowSteps.length - 1 && (
-                  <div className="hidden md:block absolute top-0 -right-2 -translate-y-1/2 text-sostenible/20">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                )}
               </motion.div>
             ))}
           </div>
@@ -159,7 +148,7 @@ export function Ritmo() {
           className="mt-20 md:mt-28 text-center max-w-2xl mx-auto"
         >
           <p className="font-body text-lg md:text-xl text-sostenible/80 leading-relaxed italic">
-            &ldquo;En la intersección de la salud, el hábitat y el espíritu, encontramos el verdadero 
+            &ldquo;En la intersección de la salud, el hábitat y el espíritu, encontramos el verdadero
             propósito: crear espacios que nutren el cuerpo, acogen la vida y elevan el alma.&rdquo;
           </p>
         </motion.div>

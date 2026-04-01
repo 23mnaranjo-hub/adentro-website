@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 // 1. IMPORTAMOS DESDE GOOGLE FONTS (Más seguro y rápido)
 import { Josefin_Sans, Sora, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { CustomCursor } from "@/components/ui/custom-cursor";
 
 /* ===============================
    CONFIGURACIÓN DE FUENTES
@@ -47,6 +48,7 @@ export default function RootLayout({
         // Inyectamos las variables CSS en el body
         className={`${josefin.variable} ${sora.variable} ${dmSans.variable} antialiased`}
       >
+        <CustomCursor />
         {children}
       </body>
     </html>

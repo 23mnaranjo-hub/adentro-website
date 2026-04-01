@@ -1,379 +1,300 @@
-  "use client"
+"use client"
 
-  import { motion, useMotionValue, useAnimationFrame } from "framer-motion"
-  import { useRef, useState, useEffect } from "react"
+import { useEffect, useRef } from "react"
+import { motion } from "framer-motion"
+import Matter from "matter-js"
 
-  // Definimos los tamaños en píxeles para que la física sepa calcular colisiones
-  // w-64 = 256px, w-56 = 224px, etc.
-  const getSizeInPixels = (sizeClass: string) => {
-    if (sizeClass.includes("w-64")) return 160 // Reducido un poco visualmente para el radio de colisión
-    if (sizeClass.includes("w-60")) return 140
-    if (sizeClass.includes("w-56")) return 130
-    if (sizeClass.includes("w-52")) return 120
-    if (sizeClass.includes("w-48")) return 110
-    if (sizeClass.includes("w-40")) return 90
-    return 100
-  }
+const servicesData = [
+  {
+    id: 0,
+    title: "Residencial",
+    description: "Hogares que respiran",
+    sizeClass: "w-[clamp(180px,45vw,380px)] h-[clamp(180px,45vw,380px)]",
+    textColor: "text-[#1A2611]",
+    titleClass: "text-fluid-h3-lg",
+    descClass: "text-fluid-p-md",
+  },
+  {
+    id: 1,
+    title: "Wellness",
+    description: "Bienestar activo",
+    sizeClass: "w-[clamp(140px,35vw,240px)] h-[clamp(140px,35vw,240px)]",
+    textColor: "text-[#1A2611]",
+    titleClass: "text-fluid-h3-md",
+    descClass: "text-fluid-p-md",
+  },
+  {
+    id: 2,
+    title: "Consultoría",
+    description: "Guía experta",
+    sizeClass: "w-[clamp(110px,25vw,160px)] h-[clamp(110px,25vw,160px)]",
+    textColor: "text-[#1A2611]",
+    titleClass: "text-fluid-h3-sm",
+    descClass: "text-fluid-p-sm",
+  },
+  {
+    id: 3,
+    title: "Corporativos",
+    description: "Oficinas que inspiran",
+    sizeClass: "w-[clamp(150px,40vw,280px)] h-[clamp(150px,40vw,280px)]",
+    textColor: "text-[#1A2611]",
+    titleClass: "text-[clamp(1.1rem,2.5vw,1.8rem)]",
+    descClass: "text-[clamp(0.7rem,1.5vw,0.85rem)]",
+  },
+  {
+    id: 4,
+    title: "Espacio Público",
+    description: "Comunidad",
+    sizeClass: "w-[clamp(120px,30vw,200px)] h-[clamp(120px,30vw,200px)]",
+    textColor: "text-[#1A2611]",
+    titleClass: "text-[clamp(1.1rem,2vw,1.25rem)]",
+    descClass: "text-fluid-p-sm",
+  },
+  {
+    id: 5,
+    title: "Hotelería",
+    description: "Inmersivos",
+    sizeClass: "w-[clamp(140px,38vw,250px)] h-[clamp(140px,38vw,250px)]",
+    textColor: "text-[#1A2611]",
+    titleClass: "text-fluid-h3-md",
+    descClass: "text-fluid-p-md",
+  },
+]
 
-  const servicesData = [
-    {
-      id: 0,
-      title: "Residencial",
-      description: "Hogares que respiran contigo",
-      gradient: "from-pistachio/60 via-pistachio/30 to-transparent",
-      blurColor: "bg-pistachio/20",
-      sizeClass: "w-64 h-64 md:w-80 md:h-80", 
-      radius: 128, // Radio base para física (mitad de w-64 aprox)
-    },
-    {
-      id: 1,
-      title: "Wellness & Center",
-      description: "Espacios para el bienestar",
-      gradient: "from-soft-clay/60 via-soft-clay/30 to-transparent",
-      blurColor: "bg-soft-clay/20",
-      sizeClass: "w-56 h-56 md:w-72 md:h-72",
-      radius: 112,
-    },
-    {
-      id: 2,
-      title: "Consultoría",
-      description: "Guía experta",
-      gradient: "from-warm-sand/70 via-warm-sand/40 to-transparent",
-      blurColor: "bg-warm-sand/30",
-      sizeClass: "w-40 h-40 md:w-48 md:h-48",
-      radius: 80,
-    },
-    {
-      id: 3,
-      title: "Corporativos",
-      description: "Oficinas que inspiran",
-      gradient: "from-oatmilk/80 via-oatmilk/50 to-transparent",
-      blurColor: "bg-oatmilk/40",
-      sizeClass: "w-60 h-60 md:w-72 md:h-72",
-      radius: 120,
-    },
-    {
-      id: 4,
-      title: "Espacio público",
-      description: "Comunidad",
-      gradient: "from-pistachio/50 via-pistachio/25 to-transparent",
-      blurColor: "bg-pistachio/15",
-      sizeClass: "w-48 h-48 md:w-56 md:h-56",
-      radius: 96,
-    },
-    {
-      id: 5,
-      title: "Hoteles & Resorts",
-      description: "Experiencias inmersivas",
-      gradient: "from-soft-clay/50 via-soft-clay/25 to-transparent",
-      blurColor: "bg-soft-clay/15",
-      sizeClass: "w-52 h-52 md:w-64 md:h-64",
-      radius: 104,
-    },
-  ]
+export function Services() {
+  const containerRef = useRef<HTMLElement>(null)
+  const engineRef = useRef<Matter.Engine | null>(null)
+  const circleRefs = useRef<(HTMLDivElement | null)[]>([])
 
-  // Animación de "Gelatina" (Blob visual)
-  const blobAnimation = {
-    initial: {
-      borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
-    },
-    animate: {
-      borderRadius: [
-        "60% 40% 30% 70% / 60% 30% 70% 40%",
-        "30% 60% 70% 40% / 50% 60% 30% 60%",
-        "60% 40% 30% 70% / 60% 30% 70% 40%",
-      ],
-      transition: {
-        duration: 8,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  }
+  useEffect(() => {
+    if (!containerRef.current) return
 
-  export function Services() {
-    const containerRef = useRef<HTMLDivElement>(null)
-    
-    // Estado para saber si el usuario está agarrando una bola (pausar física para esa bola)
-    const [draggingId, setDraggingId] = useState<number | null>(null)
+    // 1. Initialize Physics Engine (Zero gravity, fully floating)
+    const engine = Matter.Engine.create({
+      gravity: { x: 0, y: 0, scale: 0 }
+    })
+    engineRef.current = engine
+    const world = engine.world
 
-    // Inicializamos posiciones y velocidades aleatorias
-    // Usamos useRef para mantener el estado de la física sin re-renderizar React constantemente
-    const physicsState = useRef(
-      servicesData.map((s) => ({
-        x: Math.random() * 800, // Posición inicial aleatoria X
-        y: Math.random() * 600, // Posición inicial aleatoria Y
-        vx: (Math.random() - 0.5) * 0.15, // Velocidad X (lenta para efecto flotante)
-        vy: (Math.random() - 0.5) * 0.15, // Velocidad Y
-        radius: s.radius,
-        mass: s.radius, // Masa proporcional al tamaño
-      }))
-    )
+    const containerWidth = containerRef.current.clientWidth
+    const containerHeight = containerRef.current.clientHeight
 
-    // MotionValues para actualizar el DOM directamente (Optimizado)
-    // Creamos un array de MotionValues para X e Y
-    const xValues = servicesData.map(() => useMotionValue(0))
-    const yValues = servicesData.map(() => useMotionValue(0))
+    // We create rigid boxes outside the visible frame
+    const wallOptions = {
+      isStatic: true,
+      render: { visible: false },
+      friction: 0.05,
+      restitution: 0.9 // Ultra bouncy walls for fun
+    }
 
-    // Loop de Física (Se ejecuta en cada frame ~60fps)
-    useAnimationFrame(() => {
-      if (!containerRef.current) return
+    const wallThickness = 100
 
-      const containerWidth = containerRef.current.offsetWidth
-      const containerHeight = containerRef.current.offsetHeight
-      const balls = physicsState.current
+    // We create rigid boxes outside the visible frame
+    const walls = [
+      Matter.Bodies.rectangle(containerWidth / 2, -wallThickness / 2, containerWidth + 200, wallThickness, wallOptions),
+      Matter.Bodies.rectangle(containerWidth / 2, containerHeight + wallThickness / 2, containerWidth + 200, wallThickness, wallOptions),
+      Matter.Bodies.rectangle(-wallThickness / 2, containerHeight / 2, wallThickness, containerHeight + 200, wallOptions),
+      Matter.Bodies.rectangle(containerWidth + wallThickness / 2, containerHeight / 2, wallThickness, containerHeight + 200, wallOptions)
+    ]
+    Matter.World.add(world, walls)
 
-      // 1. Mover las bolas
-      balls.forEach((ball, i) => {
-        // Si el usuario la está arrastrando, no actualizamos su posición por física
-        if (draggingId === i) return
+    // 3. Create Bubbles natively measuring DOM elements to guarantee exact match
+    const bodies: Matter.Body[] = []
 
-        ball.x += ball.vx
-        ball.y += ball.vy
+    circleRefs.current.forEach((el) => {
+      if (!el) return
 
-        // Rebote con PAREDES
-        // Pared Derecha
-        if (ball.x + ball.radius > containerWidth) {
-          ball.x = containerWidth - ball.radius
-          ball.vx *= -0.6
-        }
-        // Pared Izquierda
-        if (ball.x - ball.radius < 0) {
-          ball.x = ball.radius
-          ball.vx *= -0.6
-        }
-        // Pared Abajo
-        if (ball.y + ball.radius > containerHeight) {
-          ball.y = containerHeight - ball.radius
-          ball.vy *= -0.6
-        }
-        // Pared Arriba
-        if (ball.y - ball.radius < 0) {
-          ball.y = ball.radius
-          ball.vy *= -0.6
+      const rect = el.getBoundingClientRect()
+      const radius = rect.width / 2
+
+      // Distribute randomly near center
+      const x = Math.random() * (containerWidth - radius * 2) + radius
+      const y = Math.random() * (containerHeight - radius * 2) + radius
+
+      const body = Matter.Bodies.circle(x, y, radius, {
+        restitution: 0.8,     // Highly bouncy & elastic between bubbles
+        friction: 0.001,      // Super slippery
+        frictionAir: 0.015,   // Light damping for fluid, satisfying swift motion
+        density: 0.002 * Math.pow(radius / 100, 2), // Satisfying heavy mass on impact
+        render: { visible: false },
+        plugin: {
+          organicPhase: Math.random() * Math.PI * 2,
+          organicSpeed: 0.02 + Math.random() * 0.02
         }
       })
 
-      // 2. Detectar y Resolver Colisiones entre BOLAS
-      for (let i = 0; i < balls.length; i++) {
-        for (let j = i + 1; j < balls.length; j++) {
-          const b1 = balls[i]
-          const b2 = balls[j]
+      // Give them initial mild velocity spread
+      Matter.Body.setVelocity(body, {
+        x: (Math.random() - 0.5) * 8,
+        y: (Math.random() - 0.5) * 8
+      })
 
-          const dx = b2.x - b1.x
-          const dy = b2.y - b1.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-          const minDist = b1.radius + b2.radius
+      bodies.push(body)
+    })
 
-          // Si se tocan...
-          if (distance < minDist) {
-            // A. Resolver superposición (Separarlas para que no se queden pegadas)
-            const angle = Math.atan2(dy, dx)
-            const targetX = b1.x + Math.cos(angle) * minDist
-            const targetY = b1.y + Math.sin(angle) * minDist
-            
-            // Empujar suavemente (corrección de posición)
-            const overlap = minDist - distance
-            const ax = Math.cos(angle) * overlap * 0.5
-            const ay = Math.sin(angle) * overlap * 0.5
+    Matter.World.add(world, bodies)
 
-            if (draggingId !== i) {
-              b1.x -= ax
-              b1.y -= ay
-            }
-            if (draggingId !== j) {
-              b2.x += ax
-              b2.y += ay
-            }
-
-            // B. Resolver Velocidad (Rebote elástico)
-            // Normal unitaria
-            const nx = dx / distance
-            const ny = dy / distance
-
-            // Velocidad relativa
-            const dvx = b2.vx - b1.vx
-            const dvy = b2.vy - b1.vy
-            
-            // Velocidad a lo largo de la normal
-            const velAlongNormal = dvx * nx + dvy * ny
-
-            // Si se están alejando, no hacer nada
-            if (velAlongNormal > 0) continue
-
-            // Coeficiente de restitución (1 = elástico perfecto, < 1 pierde energía)
-            const restitution = 0.1 
-
-            // Impulso escalar
-            let jVal = -(1 + restitution) * velAlongNormal
-            jVal /= (1 / b1.mass + 1 / b2.mass)
-
-            // Aplicar impulso
-            const impulseX = jVal * nx
-            const impulseY = jVal * ny
-
-            if (draggingId !== i) {
-              b1.vx -= impulseX / b1.mass
-              b1.vy -= impulseY / b1.mass
-            }
-            if (draggingId !== j) {
-              b2.vx += impulseX / b2.mass
-              b2.vy += impulseY / b2.mass
-            }
-          }
-        }
+    // 4. Advanced 10x Mouse Dragging interactions
+    const mouse = Matter.Mouse.create(containerRef.current)
+    const mouseConstraint = Matter.MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.15, // Smooth spring for dragging
+        damping: 0.1,
+        render: { visible: false }
       }
+    })
+    Matter.World.add(world, mouseConstraint)
 
-      // 3. Aplicar posiciones visuales
-      balls.forEach((ball, i) => {
-          // Ajustamos porque el "x,y" es el centro, pero el div se posiciona desde la esquina top-left normalmente,
-          // pero aquí usaremos transform translate.
-          // Restamos el radio para centrar visualmente.
-          xValues[i].set(ball.x - ball.radius)
-          yValues[i].set(ball.y - ball.radius)
+    // Detach scrolling to allow page scroll when swiping on the container
+    mouseConstraint.mouse.element.removeEventListener("mousewheel", (mouseConstraint.mouse as any).mousewheel)
+    mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", (mouseConstraint.mouse as any).mousewheel)
+
+    // 5. Magnetic Core Gravity (Agar.io clustering)
+    // Constantly pull bubbles gently towards the center
+    Matter.Events.on(engine, 'beforeUpdate', () => {
+      const centerX = containerWidth / 2
+      const centerY = containerHeight / 2
+
+      bodies.forEach(body => {
+        const dx = centerX - body.position.x
+        const dy = centerY - body.position.y
+        const dist = Math.sqrt(dx * dx + dy * dy)
+
+        if (dist > 0) {
+          // Extremely subtle central attraction force mapping to mass
+          const forceMagnitude = 0.0000025 * body.mass
+          Matter.Body.applyForce(body, body.position, {
+            x: (dx / dist) * forceMagnitude,
+            y: (dy / dist) * forceMagnitude
+          })
+        }
       })
     })
 
-    // Inicializar posiciones dispersas al cargar
-    useEffect(() => {
-  if (containerRef.current) {
-    const w = containerRef.current.offsetWidth
-    const h = containerRef.current.offsetHeight
+    // 6. Native 60 FPS Render Loop (Syncing DOM strictly)
+    let animationFrameId: number
+    const Runner = Matter.Runner.create()
+    Matter.Runner.run(Runner, engine)
 
-    // Cuadrícula 3 columnas x 2 filas
-    const cols = 3
-    const rows = 2
-    const cellW = w / cols
-    const cellH = h / rows
+    let tick = 0
+    const updateDOM = () => {
+      tick++
+      circleRefs.current.forEach((el, index) => {
+        if (el && bodies[index]) {
+          const body = bodies[index]
 
-    physicsState.current.forEach((b, i) => {
-      const col = i % cols
-      const row = Math.floor(i / cols)
+          // Breathing organic motion
+          const wobble = Math.sin(tick * body.plugin.organicSpeed + body.plugin.organicPhase) * 0.03
+          const baseScale = 1 + wobble
 
-      // Centro de cada celda + pequeño offset aleatorio para que no sea robótico
-      b.x = cellW * col + cellW / 2 + (Math.random() - 0.5) * 40
-      b.y = cellH * row + cellH / 2 + (Math.random() - 0.5) * 40
+          // Plasma squish deformation based on velocity
+          const speed = Matter.Vector.magnitude(body.velocity)
+          const stretchX = 1 + Math.min(speed * 0.015, 0.15)
+          const stretchY = 1 - Math.min(speed * 0.005, 0.05)
 
-      // Velocidad inicial muy suave
-      b.vx = (Math.random() - 0.5) * 0.1
-      b.vy = (Math.random() - 0.5) * 0.1
-    })
-  }
-}, [])
+          // The magic: Combine Translation, Rotation, Squish & Organic scale
+          el.style.transform = `translate(${body.position.x}px, ${body.position.y}px) translate(-50%, -50%) rotate(${body.angle}rad) scale(${baseScale * stretchX}, ${baseScale * stretchY})`
+        }
+      })
+      animationFrameId = requestAnimationFrame(updateDOM)
+    }
+    updateDOM()
 
-    return (
-      <section id="servicios" className="relative py-24 md:py-32 overflow-hidden min-h-[900px] flex flex-col items-center bg-transparent">
-        
-        {/* Texture Layer */}
-        <div
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
-        />
+    // 7. Cleanup
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      Matter.Runner.stop(Runner)
+      if (engineRef.current) {
+        Matter.Engine.clear(engineRef.current)
+        Matter.World.clear(engineRef.current.world, false)
+      }
+    }
+  }, []) // Empty deps so it calculates exact radii ONCE upon initial paint layout
 
-        {/* Título de la Sección */}
-        {/* Título de la Sección */}
-      {/* Título de la Sección */}
+  return (
+    <section
+      ref={containerRef}
+      id="servicios"
+      className="relative py-24 md:py-32 overflow-hidden min-h-[900px] lg:min-h-screen w-full flex flex-col items-center bg-transparent"
+    >
+      {/* SVG Gooey Filter definition for Organic Merging FX */}
+      <svg className="absolute w-0 h-0">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -15" result="goo" />
+            <feBlend in="SourceGraphic" in2="goo" />
+          </filter>
+        </defs>
+      </svg>
+
+      {/* Texture Layer */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Título de la Sección que interactúa visualmente con las bolas (Difference Blending) */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="relative z-20 text-center mb-12 px-6 pointer-events-none"
+        // z-40 so it floats OVER the bubbles. mix-blend-difference against the Ivory Cream makes the text turn dark/negative natively.
+        className="absolute top-24 md:top-36 left-0 right-0 z-40 text-center px-6 pointer-events-none mix-blend-difference"
       >
-        {/* CAMBIO AQUÍ: Usamos 'font-heading' que es tu JosefinSans-SemiBold */}
-        <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-sostenible mb-6">
+        <h2 className="font-heading text-fluid-h2 text-white/90 mb-6 drop-shadow-sm">
           Lo que hacemos
         </h2>
-        
-        <p className="font-body text-sm text-sostenible/70 max-w-xl mx-auto tracking-wide">
+        <p className="font-body text-fluid-p-lg text-white/70 max-w-xl mx-auto tracking-wide">
           Cada proyecto es un organismo vivo.
         </p>
       </motion.div>
 
-        {/* Contenedor de Física */}
-        <div 
-          ref={containerRef} 
-          className="relative w-full max-w-7xl h-[600px] md:h-[700px] mx-auto overflow-hidden"
-          style={{ touchAction: "none" }} // Importante para drag en móviles
-        >
-          {servicesData.map((service, index) => (
-            <motion.div
+      {/* Bubble container wrapped in gooey filter for membrane merging */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-30" style={{ filter: "url(#goo)" }}>
+        {servicesData.map((service, index) => {
+          return (
+            <div
               key={service.id}
-              drag
-              dragConstraints={containerRef}
-              dragElastic={0.2}
-              // Eventos para pausar física al arrastrar
-              onDragStart={() => setDraggingId(index)}
-              onDragEnd={() => setDraggingId(null)}
-              // En vez de actualizar por React state, actualizamos la referencia física
-              onDrag={(e, info) => {
-  const ball = physicsState.current[index]
-  if (ball && containerRef.current) {
-    const rect = containerRef.current.getBoundingClientRect()
-    
-    // Compensar el scroll de la página
-    ball.x = info.point.x - rect.left
-    ball.y = info.point.y - rect.top - window.scrollY
-
-    // Clamp para que no salga del contenedor
-    ball.x = Math.max(ball.radius, Math.min(rect.width - ball.radius, ball.x))
-    ball.y = Math.max(ball.radius, Math.min(rect.height - ball.radius, ball.y))
-
-    // Velocidad de lanzamiento suave al soltar
-    ball.vx = info.velocity.x * 0.01
-    ball.vy = info.velocity.y * 0.01
-  }
-}}
-
-              variants={blobAnimation}
-              initial="initial"
-              animate="animate"
-              
-              // Aquí enlazamos la posición física con el div visual
-              style={{
-                  x: xValues[index],
-                  y: yValues[index],
-                  position: "absolute",
-                  top: 0, 
-                  left: 0,
+              ref={(el) => {
+                circleRefs.current[index] = el
               }}
-              
-              whileHover={{ scale: 1.05, zIndex: 50, cursor: "grab" }}
-              whileTap={{ scale: 0.95, cursor: "grabbing" }}
-              
-              className={`flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm border border-white/30 shadow-lg ${service.sizeClass}`}
+              className={`absolute top-0 left-0 rounded-full flex flex-col items-center justify-center text-center cursor-grab active:cursor-grabbing hover:z-50 pointer-events-auto transition-colors duration-300 touch-none ${service.sizeClass}`}
+              style={{
+                backgroundColor: "#F9F3E8",
+                boxShadow: "inset -15px -15px 40px rgba(0, 0, 0, 0.08), inset 15px 15px 40px rgba(255, 255, 255, 1), 0 20px 45px rgba(0,0,0,0.12)",
+                willChange: "transform",
+                transformOrigin: "center center",
+              }}
             >
-              {/* Background Layers */}
-              <div className={`absolute inset-0 bg-[#F0EAD8]/40 -z-20`} style={{ borderRadius: "inherit" }} />
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} -z-10`}
-                style={{ borderRadius: "inherit" }}
-              />
-              
-              {/* Glass Shine */}
-              <div 
-                  className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent -z-10" 
-                  style={{ borderRadius: "inherit" }}
-              />
-
-              {/* Contenido */}
-              <div className="relative z-10 pointer-events-none select-none">
-                <h3 className="font-heading text-lg md:text-2xl font-bold text-sostenible mb-1">
+              {/* Text Layer - Simple, clean, readable over Ivory Cream */}
+              <div className="relative z-10 select-none flex flex-col items-center justify-center w-[85%] h-[85%] px-4">
+                <h3
+                  className={`font-heading font-bold tracking-tight leading-none break-words ${service.textColor} ${service.titleClass}`}
+                >
                   {service.title}
                 </h3>
-                <p className="font-body text-xs md:text-sm text-sostenible/70 opacity-0 md:opacity-100 transition-opacity duration-300 group-hover:opacity-100">
-                  {service.description}
-                </p>
+
+                {service.id !== 2 && service.id !== 4 && (
+                  <p
+                    className={`font-body ${service.textColor} opacity-90 font-medium leading-tight mt-3 px-2 md:px-6 ${service.descClass}`}
+                  >
+                    {service.description}
+                  </p>
+                )}
               </div>
-            </motion.div>
-          ))}
-        </div>
-        
-        {/* Indicador sutil para móviles */}
-        <p className="md:hidden text-xs text-sostenible/40 mt-8 animate-pulse text-center">
-          Toca, arrastra y choca las esferas
-        </p>
-      </section>
-    )
-  }
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Floating indicator for interaction */}
+      <p className="absolute bottom-8 left-0 right-0 md:hidden text-xs text-sostenible/50 animate-pulse text-center tracking-wider pointer-events-none z-10">
+        Toca, empuja y choca las esferas
+      </p>
+    </section>
+  )
+}

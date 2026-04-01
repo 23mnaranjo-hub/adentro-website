@@ -6,6 +6,7 @@ import { About } from "@/components/about"
 import { CrearJuntos } from "@/components/contact"
 import { Footer } from "@/components/footer"
 import { GrainOverlay } from "@/components/grain-overlay"
+import { Projects } from "@/components/projects"
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <Services />
       <Ritmo />
+      <Projects />
       <About />
       <CrearJuntos />
       <Footer />

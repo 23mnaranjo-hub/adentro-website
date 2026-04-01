@@ -12,103 +12,103 @@ export const projectsData: Project[] = [
         id: "andes-ciudad",
         title: "Refugio Vanguardista",
         description: "Proyecto ganador del concurso Cotelco. Una propuesta arquitectónica integradora con la identidad urbana y hospitalaria.",
-        coverImage: "/images/proyectos/ANDES CIUDAD(proyecto ganador concurso Cotelco )/AC1.jpg",
+        coverImage: "/images/proyectos/andes-ciudad/ac1.jpg",
         gallery: [
-            "/images/proyectos/ANDES CIUDAD(proyecto ganador concurso Cotelco )/AC1.jpg",
-            "/images/proyectos/ANDES CIUDAD(proyecto ganador concurso Cotelco )/AC2.jpg",
-            "/images/proyectos/ANDES CIUDAD(proyecto ganador concurso Cotelco )/AC3.jpg",
-            "/images/proyectos/ANDES CIUDAD(proyecto ganador concurso Cotelco )/AC4.jpg"
+            "/images/proyectos/andes-ciudad/ac1.jpg",
+            "/images/proyectos/andes-ciudad/ac2.jpg",
+            "/images/proyectos/andes-ciudad/ac3.jpg",
+            "/images/proyectos/andes-ciudad/ac4.jpg"
         ],
-        video: "/images/proyectos/ANDES CIUDAD(proyecto ganador concurso Cotelco )/ACVIDEO.mp4"
+        video: "/images/proyectos/andes-ciudad/acvideo.mp4"
     },
     {
         id: "caribe",
         title: "Caribe",
         description: "Diseño costero y sustentable, optimizado para climas cálidos integrando la brisa del mar y materiales endémicos.",
-        coverImage: "/images/proyectos/CARIBE/CAR1.jpg",
+        coverImage: "/images/proyectos/caribe/car1.jpg",
         gallery: [
-            "/images/proyectos/CARIBE/CAR1.jpg",
-            "/images/proyectos/CARIBE/CAR2.jpg",
-            "/images/proyectos/CARIBE/CAR3.jpg",
-            "/images/proyectos/CARIBE/CAR4.jpg",
-            "/images/proyectos/CARIBE/CAR5.jpg",
-            "/images/proyectos/CARIBE/CAR6.jpg",
-            "/images/proyectos/CARIBE/CAR7.jpg",
-            "/images/proyectos/CARIBE/CAR8.jpg"
+            "/images/proyectos/caribe/car1.jpg",
+            "/images/proyectos/caribe/car2.jpg",
+            "/images/proyectos/caribe/car3.jpg",
+            "/images/proyectos/caribe/car4.jpg",
+            "/images/proyectos/caribe/car5.jpg",
+            "/images/proyectos/caribe/car6.jpg",
+            "/images/proyectos/caribe/car7.jpg",
+            "/images/proyectos/caribe/car8.jpg"
         ]
     },
     {
         id: "conant",
         title: "Conant",
         description: "Estructuras vanguardistas y minimalismo absoluto. Exploración del concreto desnudo y la luz natural.",
-        coverImage: "/images/proyectos/CONANT/CON1.jpg",
+        coverImage: "/images/proyectos/conant/con1.jpg",
         gallery: [
-            "/images/proyectos/CONANT/CON1.jpg",
-            "/images/proyectos/CONANT/CON2.jpg",
-            "/images/proyectos/CONANT/CON3.jpg",
-            "/images/proyectos/CONANT/CON4.jpg",
-            "/images/proyectos/CONANT/CON5.jpg",
-            "/images/proyectos/CONANT/CON6.jpg",
-            "/images/proyectos/CONANT/CON7.jpg",
-            "/images/proyectos/CONANT/CON8.jpg",
-            "/images/proyectos/CONANT/CON9.jpg",
-            "/images/proyectos/CONANT/CON10.jpg"
+            "/images/proyectos/conant/con1.jpg",
+            "/images/proyectos/conant/con2.jpg",
+            "/images/proyectos/conant/con3.jpg",
+            "/images/proyectos/conant/con4.jpg",
+            "/images/proyectos/conant/con5.jpg",
+            "/images/proyectos/conant/con6.jpg",
+            "/images/proyectos/conant/con7.jpg",
+            "/images/proyectos/conant/con8.jpg",
+            "/images/proyectos/conant/con9.jpg",
+            "/images/proyectos/conant/con10.jpg"
         ]
     },
     {
         id: "gym-boutique",
         title: "Gym Boutique",
         description: "Un espacio de entrenamiento wellness de alta gama. Acabados premium e iluminación atmosférica curada.",
-        coverImage: "/images/proyectos/GYM BOUTIQUE/BOU1.jpg",
+        coverImage: "/images/proyectos/gym-boutique/bou1.jpg",
         gallery: [
-            "/images/proyectos/GYM BOUTIQUE/BOU1.jpg",
-            "/images/proyectos/GYM BOUTIQUE/BOU2.jpg",
-            "/images/proyectos/GYM BOUTIQUE/BOU3.jpg",
-            "/images/proyectos/GYM BOUTIQUE/BOU4.jpg",
-            "/images/proyectos/GYM BOUTIQUE/GYM BOUTIQUE 3.jpg"
+            "/images/proyectos/gym-boutique/bou1.jpg",
+            "/images/proyectos/gym-boutique/bou2.jpg",
+            "/images/proyectos/gym-boutique/bou3.jpg",
+            "/images/proyectos/gym-boutique/bou4.jpg",
+            "/images/proyectos/gym-boutique/gym-boutique-3.jpg"
         ]
     },
     {
         id: "refugio-rural",
         title: "Refugio Rural",
         description: "Conexión directa con la naturaleza. Cabañas inmersivas diseñadas para la tranquilidad y el desconecte ecológico.",
-        coverImage: "/images/proyectos/REFUGIO  RURAL/RUR1.jpg",
+        coverImage: "/images/proyectos/refugio-rural/rur1.jpg",
         gallery: [
-            "/images/proyectos/REFUGIO  RURAL/RUR1.jpg",
-            "/images/proyectos/REFUGIO  RURAL/RUR2.jpg",
-            "/images/proyectos/REFUGIO  RURAL/RUR3.jpg",
-            "/images/proyectos/REFUGIO  RURAL/RUR4.jpg",
-            "/images/proyectos/REFUGIO  RURAL/RUR5.jpg",
-            "/images/proyectos/REFUGIO  RURAL/RUR6.jpg",
-            "/images/proyectos/REFUGIO  RURAL/RUR7.jpg",
-            "/images/proyectos/REFUGIO  RURAL/RUR8.jpg"
+            "/images/proyectos/refugio-rural/rur1.jpg",
+            "/images/proyectos/refugio-rural/rur2.jpg",
+            "/images/proyectos/refugio-rural/rur3.jpg",
+            "/images/proyectos/refugio-rural/rur4.jpg",
+            "/images/proyectos/refugio-rural/rur5.jpg",
+            "/images/proyectos/refugio-rural/rur6.jpg",
+            "/images/proyectos/refugio-rural/rur7.jpg",
+            "/images/proyectos/refugio-rural/rur8.jpg"
         ]
     },
     {
         id: "urban-living",
         title: "Urban Living",
         description: "Vivienda multifamiliar metropolitana. Optimización de espacios y bio-arquitectura en el centro de la ciudad.",
-        coverImage: "/images/proyectos/URBAN LIVING/URB1.jpg",
+        coverImage: "/images/proyectos/urban-living/urb1.jpg",
         gallery: [
-            "/images/proyectos/URBAN LIVING/URB1.jpg",
-            "/images/proyectos/URBAN LIVING/URB2.jpg",
-            "/images/proyectos/URBAN LIVING/URB3.jpg",
-            "/images/proyectos/URBAN LIVING/URB4.jpg",
-            "/images/proyectos/URBAN LIVING/URB5.jpg",
-            "/images/proyectos/URBAN LIVING/URB6.jpg",
-            "/images/proyectos/URBAN LIVING/URB6.2.jpg",
-            "/images/proyectos/URBAN LIVING/URB7.jpg",
-            "/images/proyectos/URBAN LIVING/URB8.jpg",
-            "/images/proyectos/URBAN LIVING/URB9.jpg",
-            "/images/proyectos/URBAN LIVING/URB10.jpg",
-            "/images/proyectos/URBAN LIVING/URB11.jpg",
-            "/images/proyectos/URBAN LIVING/URB12.jpg",
-            "/images/proyectos/URBAN LIVING/URB13.jpg",
-            "/images/proyectos/URBAN LIVING/URB14.jpg",
-            "/images/proyectos/URBAN LIVING/URB15.jpg",
-            "/images/proyectos/URBAN LIVING/URB16.jpg",
-            "/images/proyectos/URBAN LIVING/URB17.jpg",
-            "/images/proyectos/URBAN LIVING/URB18.jpg"
+            "/images/proyectos/urban-living/urb1.jpg",
+            "/images/proyectos/urban-living/urb2.jpg",
+            "/images/proyectos/urban-living/urb3.jpg",
+            "/images/proyectos/urban-living/urb4.jpg",
+            "/images/proyectos/urban-living/urb5.jpg",
+            "/images/proyectos/urban-living/urb6.jpg",
+            "/images/proyectos/urban-living/urb6.2.jpg",
+            "/images/proyectos/urban-living/urb7.jpg",
+            "/images/proyectos/urban-living/urb8.jpg",
+            "/images/proyectos/urban-living/urb9.jpg",
+            "/images/proyectos/urban-living/urb10.jpg",
+            "/images/proyectos/urban-living/urb11.jpg",
+            "/images/proyectos/urban-living/urb12.jpg",
+            "/images/proyectos/urban-living/urb13.jpg",
+            "/images/proyectos/urban-living/urb14.jpg",
+            "/images/proyectos/urban-living/urb15.jpg",
+            "/images/proyectos/urban-living/urb16.jpg",
+            "/images/proyectos/urban-living/urb17.jpg",
+            "/images/proyectos/urban-living/urb18.jpg"
         ]
     }
 ];
